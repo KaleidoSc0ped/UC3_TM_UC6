@@ -1,16 +1,15 @@
 ﻿using Grocery.App.Views;
 
-namespace Grocery.App
+namespace Grocery.App;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-            Routing.RegisterRoute(nameof(GroceryListItemsView), typeof(GroceryListItemsView));
-            Routing.RegisterRoute(nameof(ProductView), typeof(ProductView));
-            Routing.RegisterRoute(nameof(ChangeColorView), typeof(ChangeColorView));
-            //Routing.RegisterRoute("Login", typeof(LoginView));
-        }
+        InitializeComponent();
+        Routing.RegisterRoute(nameof(GroceryListItemsView), typeof(GroceryListItemsView));
+        Routing.RegisterRoute(nameof(ProductView), typeof(ProductView));
+        Routing.RegisterRoute(nameof(ChangeColorView), typeof(ChangeColorView));
+        //Routing.RegisterRoute("Login", typeof(LoginView));
     }
 }

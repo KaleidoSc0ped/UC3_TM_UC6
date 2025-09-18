@@ -1,10 +1,8 @@
-﻿
-using Grocery.Core.Models;
+﻿using Grocery.Core.Models;
 
-namespace Grocery.Core.Interfaces.Services
+namespace Grocery.Core.Interfaces.Services;
+
+public interface IAuthService
 {
-    public interface IAuthService
-    {
-        Client? Login(string email, string password);
-    }
+    Client? Login(string email, string password);
 }

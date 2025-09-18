@@ -1,22 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Grocery.Core.Models
+namespace Grocery.Core.Models;
+
+public partial class GroceryList : Model
 {
-    public partial class GroceryList : Model
+    [ObservableProperty] public string color;
+
+    public GroceryList(int id, string name, DateOnly date, string color, int clientId) : base(id, name)
     {
-        public DateOnly Date { get; set; }
-        public int ClientId { get; set; }
-        [ObservableProperty]
-        public string color;
-
-        public GroceryList(int id, string name, DateOnly date, string color, int clientId) : base(id, name)
-        {
-            Id = id;
-            Name = name;
-            Date = date;
-            Color = color;
-            ClientId = clientId;
-        }
-
+        Id = id;
+        Name = name;
+        Date = date;
+        Color = color;
+        ClientId = clientId;
     }
+
+    public DateOnly Date { get; set; }
+    public int ClientId { get; set; }
 }

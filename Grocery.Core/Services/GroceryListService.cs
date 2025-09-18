@@ -2,37 +2,39 @@
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 
-namespace Grocery.Core.Services
+namespace Grocery.Core.Services;
+
+public class GroceryListService : IGroceryListService
 {
-    public class GroceryListService : IGroceryListService
+    private readonly IGroceryListRepository _groceryRepository;
+
+    public GroceryListService(IGroceryListRepository groceryRepository)
     {
-        private readonly IGroceryListRepository _groceryRepository;
-        public GroceryListService(IGroceryListRepository groceryRepository)
-        {
-            _groceryRepository = groceryRepository;
-        }
-        public List<GroceryList> GetAll()
-        {
-            return _groceryRepository.GetAll();
-        }
-        public GroceryList Add(GroceryList item)
-        {
-            throw new NotImplementedException();
-        }
+        _groceryRepository = groceryRepository;
+    }
 
-        public GroceryList? Delete(GroceryList item)
-        {
-            throw new NotImplementedException();
-        }
+    public List<GroceryList> GetAll()
+    {
+        return _groceryRepository.GetAll();
+    }
 
-        public GroceryList? Get(int id)
-        {
-            return _groceryRepository.Get(id);
-        }
+    public GroceryList Add(GroceryList item)
+    {
+        throw new NotImplementedException();
+    }
 
-        public GroceryList? Update(GroceryList item)
-        {
-            return _groceryRepository.Update(item);
-        }
+    public GroceryList? Delete(GroceryList item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public GroceryList? Get(int id)
+    {
+        return _groceryRepository.Get(id);
+    }
+
+    public GroceryList? Update(GroceryList item)
+    {
+        return _groceryRepository.Update(item);
     }
 }

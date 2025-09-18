@@ -1,9 +1,8 @@
 ﻿using Grocery.Core.Models;
 
-namespace Grocery.App.ViewModels
+namespace Grocery.App.ViewModels;
+
+public class GlobalViewModel : BaseViewModel
 {
-    public partial class GlobalViewModel : BaseViewModel
-    {
-        public Client Client { get; set; }
-    }
+    public Client Client { get; set; }
 }

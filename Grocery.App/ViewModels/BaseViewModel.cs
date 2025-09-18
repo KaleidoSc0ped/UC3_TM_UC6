@@ -1,14 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Grocery.App.ViewModels
-{
-    public partial class BaseViewModel : ObservableObject
-    {
-        [ObservableProperty]
-        string title = "";
+namespace Grocery.App.ViewModels;
 
-        public virtual void Load() { }
-        public virtual void OnAppearing() { }
-        public virtual void OnDisappearing() { }
+public partial class BaseViewModel : ObservableObject
+{
+    [ObservableProperty] private string title = "";
+
+    public virtual void Load()
+    {
+    }
+
+    public virtual void OnAppearing()
+    {
+    }
+
+    public virtual void OnDisappearing()
+    {
     }
 }

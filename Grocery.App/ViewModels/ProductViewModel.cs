@@ -1,17 +1,15 @@
-﻿using Grocery.Core.Interfaces.Services;
+﻿using System.Collections.ObjectModel;
+using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
-using System.Collections.ObjectModel;
 
-namespace Grocery.App.ViewModels
+namespace Grocery.App.ViewModels;
+
+public class ProductViewModel : BaseViewModel
 {
-    public class ProductViewModel : BaseViewModel
+    public ProductViewModel(IProductService productService)
     {
-        public ObservableCollection<Product> Products { get; set; }
-
-        public ProductViewModel(IProductService productService)
-        {
-            Products = new(productService.GetAll());
-        }
-
+        Products = new ObservableCollection<Product>(productService.GetAll());
     }
+
+    public ObservableCollection<Product> Products { get; set; }
 }
