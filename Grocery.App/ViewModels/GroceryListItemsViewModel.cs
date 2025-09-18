@@ -47,7 +47,7 @@ namespace Grocery.App.ViewModels
             //Controleer of het product al op de boodschappenlijst staat, zo niet zet het in de AvailableProducts lijst
             foreach (var product in products)
             {
-                bool alreadyInList = false;
+                bool alreadyInList = (from item in MyGroceryListItems where item.ProductId == product.Id select item).Any();
 
                 // Controleer of dit product al in de boodschappenlijst staat
                 foreach (var item in MyGroceryListItems)
@@ -59,7 +59,8 @@ namespace Grocery.App.ViewModels
                     }
                 }
 
-                if (!alreadyInList && product.stock > 0)
+                if (!alreadyInList && product.Stock > 0) //Houdt rekening met de voorraad (als die nul is kun je het niet meer aanbieden).            
+
                 {
                     AvailableProducts.Add(product);
 
@@ -69,7 +70,6 @@ namespace Grocery.App.ViewModels
 
 
         }
-            //Houdt rekening met de voorraad (als die nul is kun je het niet meer aanbieden).            
         
 
         partial void OnGroceryListChanged(GroceryList value)
