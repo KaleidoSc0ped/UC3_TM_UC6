@@ -37,7 +37,20 @@ namespace Grocery.Core.Services
                 return _groceriesRepository.Add(item);
             }
 
-            public GroceryListItem? Delete(GroceryListItem item)
+        public GroceryListItem AddProduct(int groceryListId, Product product)
+        {
+            var newItem = new GroceryListItem(
+                id: 0,                   
+                groceryListId: groceryListId,
+                productId: product.Id,
+                amount: 1          
+            );
+
+            return _groceriesRepository.Add(newItem);
+        }
+
+
+        public GroceryListItem? Delete(GroceryListItem item)
             {
                 throw new NotImplementedException();
             }
