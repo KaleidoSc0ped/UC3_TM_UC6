@@ -3,58 +3,78 @@ using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 
 namespace Grocery.Core.Services
-{
-    public class GroceryListItemsService : IGroceryListItemsService
     {
-        private readonly IGroceryListItemsRepository _groceriesRepository;
-        private readonly IProductRepository _productRepository;
-
-        public GroceryListItemsService(IGroceryListItemsRepository groceriesRepository, IProductRepository productRepository)
+        public class GroceryListItemsService : IGroceryListItemsService
         {
-            _groceriesRepository = groceriesRepository;
-            _productRepository = productRepository;
-        }
+            private readonly IGroceryListItemsRepository _groceriesRepository;
+            private readonly IProductRepository _productRepository;
 
-        public List<GroceryListItem> GetAll()
-        {
-            List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll();
-            FillService(groceryListItems);
-            return groceryListItems;
-        }
-
-        public List<GroceryListItem> GetAllOnGroceryListId(int groceryListId)
-        {
-            List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll().Where(g => g.GroceryListId == groceryListId).ToList();
-            FillService(groceryListItems);
-            return groceryListItems;
-        }
-
-        public GroceryListItem Add(GroceryListItem item)
-        {
-            return _groceriesRepository.Add(item);
-        }
-
-        public GroceryListItem? Delete(GroceryListItem item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GroceryListItem? Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GroceryListItem? Update(GroceryListItem item)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void FillService(List<GroceryListItem> groceryListItems)
-        {
-            foreach (GroceryListItem g in groceryListItems)
+            public GroceryListItemsService(IGroceryListItemsRepository groceriesRepository, IProductRepository productRepository)
             {
-                g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0);
+                _groceriesRepository = groceriesRepository;
+                _productRepository = productRepository;
+            }
+
+            public List<GroceryListItem> GetAll()
+            {
+                List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll();
+                FillService(groceryListItems);
+                return groceryListItems;
+            }
+
+            public List<GroceryListItem> GetAllOnGroceryListId(int groceryListId)
+            {
+                List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll()
+                    .Where(g => g.GroceryListId == groceryListId)
+                    .ToList();
+
+                FillService(groceryListItems);
+                return groceryListItems;
+            }
+
+            public GroceryListItem Add(GroceryListItem item)
+            {
+                return _groceriesRepository.Add(item);
+            }
+
+            public GroceryListItem? Delete(GroceryListItem item)
+            {
+                throw new NotImplementedException();
+            }
+
+            public GroceryListItem? Get(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public GroceryListItem? Update(GroceryListItem item)
+            {
+                throw new NotImplementedException();
+            }
+            public List<Product> GetAvailableProducts(int groceryListId)
+            {
+               
+                var allProducts = _productRepository.GetAll();
+
+                var groceryListItems = _groceriesRepository.GetAll()
+                    .Where(g => g.GroceryListId == groceryListId)
+                    .ToList();
+
+                var productIdsOnList = groceryListItems.Select(g => g.ProductId).ToHashSet();
+
+                var availableProducts = allProducts
+                    .Where(p => p.Stock > 0 && !productIdsOnList.Contains(p.Id))
+                    .ToList();
+
+                return availableProducts;
+            }
+
+            private void FillService(List<GroceryListItem> groceryListItems)
+            {
+                foreach (GroceryListItem g in groceryListItems)
+                {
+                    g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0);
+                }
             }
         }
     }
-}
