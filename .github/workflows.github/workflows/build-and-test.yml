@@ -1,0 +1,41 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+   env:
+      Solution_Name: Grocery.App.sln 
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore dependencies
+        run: dotnet restore $env:Solution_Name
+
+      - name: Build solution
+        run: dotnet build $env:Solution_Name --configuration ${{ matrix.configuration }} --no-restore
+
+      - name: Run unit tests
+        run: dotnet test $env:Test_Project_Path --configuration ${{ matrix.configuration }} --no-build --verbosity normal
